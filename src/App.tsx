@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
+import { Routes, Route, Link } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
+import { TabsPage } from './pages/TabsPage';
 
 // const tabs = [
 //   { id: 'tab-1', title: 'Tab 1', content: 'Some text 1' },
@@ -17,40 +21,34 @@ export const App = () => (
     >
       <div className="container">
         <div className="navbar-brand">
-          <a href="/" className="navbar-item is-active">
+          <Link to="/" className="navbar-item is-active">
             Home
-          </a>
-          <a href="/tabs" className="navbar-item">
+          </Link>
+          <Link to="/tabs" className="navbar-item">
             Tabs
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
 
     <div className="section">
-      <div className="container">
-        <h1 className="title">Home page</h1>
-        <h1 className="title">Tabs page</h1>
-        <h1 className="title">Page not found</h1>
-
-        <div className="tabs is-boxed">
-          <ul>
-            <li data-cy="Tab" className="is-active">
-              <a href="#/">Tab 1</a>
-            </li>
-            <li data-cy="Tab">
-              <a href="#/">Tab 2</a>
-            </li>
-            <li data-cy="Tab">
-              <a href="#/">Tab 3</a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="block" data-cy="TabContent">
-          Please select a tab
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/tabs" element={<TabsPage />}>
+          <Route
+            path="tab-1"
+            element={<div className="container">Content for Tab 1</div>}
+          />
+          <Route
+            path="tab-2"
+            element={<div className="container">Content for Tab 2</div>}
+          />
+          <Route
+            path="tab-3"
+            element={<div className="container">Content for Tab 3</div>}
+          />
+        </Route>
+      </Routes>
     </div>
   </>
 );
