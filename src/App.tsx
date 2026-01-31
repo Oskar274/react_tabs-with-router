@@ -1,32 +1,30 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import 'bulma/css/bulma.css';
-import '@fortawesome/fontawesome-free/css/all.css';
-import './App.scss';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import classNames from 'classnames';
 import { HomePage } from './pages/HomePage';
 import { TabsPage } from './pages/TabsPage';
 
-// const tabs = [
-//   { id: 'tab-1', title: 'Tab 1', content: 'Some text 1' },
-//   { id: 'tab-2', title: 'Tab 2', content: 'Some text 2' },
-//   { id: 'tab-3', title: 'Tab 3', content: 'Some text 3' },
-// ];
-
 export const App = () => (
   <>
-    {/* Also requires <html class="has-navbar-fixed-top"> */}
-    <nav
-      className="navbar is-light is-fixed-top is-mobile has-shadow"
-      data-cy="Nav"
-    >
+    <nav className="navbar is-light is-fixed-top has-shadow">
       <div className="container">
         <div className="navbar-brand">
-          <Link to="/" className="navbar-item is-active">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              classNames('navbar-item', { 'is-active': isActive })
+            }
+          >
             Home
-          </Link>
-          <Link to="/tabs" className="navbar-item">
+          </NavLink>
+
+          <NavLink
+            to="/tabs"
+            className={({ isActive }) =>
+              classNames('navbar-item', { 'is-active': isActive })
+            }
+          >
             Tabs
-          </Link>
+          </NavLink>
         </div>
       </div>
     </nav>
@@ -34,20 +32,9 @@ export const App = () => (
     <div className="section">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/tabs" element={<TabsPage />}>
-          <Route
-            path="tab-1"
-            element={<div className="container">Content for Tab 1</div>}
-          />
-          <Route
-            path="tab-2"
-            element={<div className="container">Content for Tab 2</div>}
-          />
-          <Route
-            path="tab-3"
-            element={<div className="container">Content for Tab 3</div>}
-          />
-        </Route>
+        <Route path="/tabs/:tabId?" element={<TabsPage />} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   </>
