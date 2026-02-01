@@ -1,4 +1,4 @@
-import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { Routes, Route, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { HomePage } from './pages/HomePage';
 import { TabsPage } from './pages/TabsPage';
@@ -32,9 +32,13 @@ export const App = () => (
     <div className="section">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/tabs/:tabId?" element={<TabsPage />} />
-        <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+
+        <Route path="/tabs">
+          <Route index element={<TabsPage />} />
+          <Route path=":tabId" element={<TabsPage />} />
+        </Route>
+
+        <Route path="*" element={<h1>Page not found</h1>} />
       </Routes>
     </div>
   </>
